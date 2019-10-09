@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+  kubectl get pods
+else
+  kubectl get pods | grep $1
+fi
+

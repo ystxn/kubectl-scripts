@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+  kubectl get cm
+else
+  x=`kubectl get cm $1 -o json|jq '.data[]'`
+  printf "$x"|sed 's/^"//g'
+fi
+

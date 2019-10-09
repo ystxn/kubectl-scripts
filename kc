@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+  kubectl config current-context
+else
+  case "$1" in
+    "p" | "prod")
+      kubectl config use-context prod
+    ;;
+    "d" | "dev")
+      kubectl config use-context dev
+    ;;
+    "s" | "stage")
+      kubectl config use-context staging
+    ;;
+    *)
+      echo invalid context
+    ;;
+esac
+fi
+

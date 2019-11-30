@@ -13,6 +13,9 @@ else
     "s" | "stage")
       kubectl config use-context staging
     ;;
+    "pi")
+      kubectl config use-context pi
+    ;;
     *)
       echo invalid context
     ;;

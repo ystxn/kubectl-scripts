@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: krcm config-map-name file.txt"
+else
+  kubectl create configmap $1 --from-file=$2 -o yaml --dry-run | kubectl replace -f -
+fi
+

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 pod=`kubectl get pods|grep $1|head -n 1|cut -f 1 -d " "`
-if [ -z "$pod" ]
-then
+
+if [ -z "$pod" ]; then
   echo "Cannot find pod to pull logs from"
 elif [ $# -eq  1 ]; then
   kubectl logs -f $pod

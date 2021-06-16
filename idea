@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+~/.jetbrains/idea $@ &>/dev/null &
+

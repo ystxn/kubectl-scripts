@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+  echo "Usage: kn [cm|pod] object"
+else
+  kubectl neat get $1 $2|batcat --style=plain -l=yaml --paging=never
+fi
+

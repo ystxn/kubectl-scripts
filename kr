@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: kr [name of deployment]"
+else
+  kubectl rollout restart deployment/$1
+fi
+

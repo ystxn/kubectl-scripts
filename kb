@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pod=`kubectl get pods|grep $1|head -n 1|cut -f 1 -d " "`
+if [ -z "$pod" ]; then
+  echo "Cannot find pod to remote into"
+else
+  kubectl exec -it $pod -- /bin/bash
+fi
+

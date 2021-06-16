@@ -4,6 +4,6 @@ if [[ $# -ne 1 ]]; then
   kubectl get cm
 else
   x=`kubectl get cm $1 -o json|jq '.data[]'`
-  printf "$x"|sed 's/^"//g'
+  printf "$x"|sed 's/^"//g'|batcat --style=plain -l=yaml --paging=never
 fi
 

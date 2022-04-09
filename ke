@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/zsh
 
 pod=`kubectl get pods|grep $1|head -n 1|cut -f 1 -d " "`
 
 if [ -z "$pod" ]; then
   echo "Cannot find pod to pull events from"
 else
-  kubectl get event --field-selector involvedObject.name=$pod
+  kubectl get event --field-selector involvedObject.name=$pod -w
 fi
 

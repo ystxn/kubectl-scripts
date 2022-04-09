@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 if [[ $# -ne 1 ]]; then
   echo "Usage: kr [name of deployment]"

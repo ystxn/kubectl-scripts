@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+# ~/.jetbrains/datagrip $@ &>/dev/null &
+
+cmd=$(sed '4!d' ~/.jetbrains/datagrip)
+cmd=${cmd[2,-7]}
+$cmd $@ &>/dev/null &

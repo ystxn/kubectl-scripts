@@ -1,0 +1,53 @@
+#!/bin/zsh
+
+fileExists() {
+  if [[ ! -f "$1" ]]; then
+    echo "File does not exist: $1" && exit
+  fi
+}
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: demux <path>.mkv" && exit
+elif [[ ( $1 =~ ":" ) && ( ! $1 =~ "\\" ) ]]; then
+  echo "Missing quotes" && exit
+elif [[ ! $1 == *mkv && ! $1 == *.mp4 ]]; then
+  echo "Not mkv/mp4 file" && exit
+elif [[ $1 =~ "\\" ]]; then
+  oldFile=${1//\\/\/}
+  oldFile=${oldFile//D:/\/mnt\/d}
+  fileExists $oldFile
+  filename=`echo $oldFile|grep -o "/[a-zA-Z0-9\-]*.i(mkv|mp4)"`
+  filenameLength=${#filename}
+  folder=${oldFile:0:-$filenameLength}
+  newFile=$folder/${filename:1:-4}
+else
+  oldFile=$1
+  fileExists $1
+  newFile=${1:0:-4}
+fi
+
+oldSize=`du -h $oldFile|cut -f 1`
+
+if [[ $1 == *.mp4 ]]; then
+  # Single Track
+  ffmpeg -y -i "$oldFile" -vn -acodec copy "$newFile.m4a"
+  audioSize=`du -h "$newFile.m4a"|cut -f 1`
+  echo "Original: $oldSize"
+  echo "Audio: $audioSize"
+else
+  # Multi Track
+  ffmpeg -y -i "$oldFile" \
+    -map 0:0 -vcodec copy "$newFile.video.mp4" \
+    -map 0:2 -vn -acodec copy "$newFile.mic.m4a" \
+    -map 0:3 -vn -acodec copy "$newFile.desktop.m4a" \
+    &>/dev/null
+
+  videoSize=`du -h "$newFile.video.mp4"|cut -f 1`
+  micSize=`du -h "$newFile.mic.m4a"|cut -f 1`
+  desktopSize=`du -h "$newFile.desktop.m4a"|cut -f 1`
+  echo "Original: $oldSize"
+  echo "Video: $videoSize"
+  echo "Mic: $micSize"
+  echo "Desktop: $desktopSize"
+fi
+

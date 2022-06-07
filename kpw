@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 if [[ $# -ne 1 ]]; then
-  kubectl get pods -w
+  kubectl get pods -o wide -w
 else
-  kubectl get pods -w| grep $1
+  kubectl get pods -o wide -w| grep $1
 fi
 

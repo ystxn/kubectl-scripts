@@ -1,12 +1,10 @@
 #!/bin/zsh
 
-pod=`kubectl get pods|grep $1|head -n 1|cut -f 1 -d " "`
+pod=`kubectl get pods "${@:2}"|grep $1|head -n 1|cut -f 1 -d " "`
 
 if [ -z "$pod" ]; then
   echo "Cannot find pod to pull logs from"
-elif [ $# -eq  1 ]; then
-  kubectl logs -f $pod
-elif [ $# -eq 2 ]; then
-  kubectl logs -f $pod --since=$2
+else
+  kubectl logs -f $pod "${@:2}"
 fi
 

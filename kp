@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 if [[ $# -ne 1 ]]; then
-  kubectl get pods
+  kubectl get pods -o wide "$@"
 else
-  kubectl get pods | grep $1
+  kubectl get pods -o wide | grep $1
 fi
 

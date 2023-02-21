@@ -13,6 +13,9 @@ else
     "s" | "stage")
       kubectl config use-context staging
     ;;
+    "l" | "labs")
+      kubectl config use-context labs
+    ;;
     "pi")
       kubectl config use-context pi
     ;;

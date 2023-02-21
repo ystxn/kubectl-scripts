@@ -1,10 +1,17 @@
 #!/bin/zsh
 
-pod=`kubectl get pods "${@:2}"|grep $1|head -n 1|cut -f 1 -d " "`
+if [[ "$2" == "-n" ]]; then
+  namespace=$3
+else
+  namespace=default
+  container=$2
+fi
+
+pod=`kubectl get pods -n $namespace|grep $1|head -n 1|cut -f 1 -d " "`
 
 if [ -z "$pod" ]; then
   echo "Cannot find pod to pull logs from"
 else
-  kubectl logs -f $pod "${@:2}"
+  kubectl logs -n $namespace -f $pod $container
 fi
 

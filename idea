@@ -1,6 +1,0 @@
-#!/bin/zsh
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-cmd=$(sed '4!d' ~/.jetbrains/idea)
-cmd=${cmd[2,-7]}
-$cmd $@ &>/dev/null &
-
